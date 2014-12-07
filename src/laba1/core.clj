@@ -13,6 +13,10 @@
 (defn hamming_distance [a b]
   (reduce + (map #(if (= %1 %2) 0 1) a b)))
 
+(defn manhattan_distance
+  [object1 object2]
+  (reduce + (map #(math/abs (- %1 %2)) object1 object2)))
+
 (defn parse_file
   [in_file]
   (let [data (csv/parse-csv (slurp in_file))]
@@ -113,5 +117,6 @@
       (estimate_of_cores (parse_file in_file)
         (case name_of_distance_function
           "euclidean" euclidean_distance
-          "hamming" hamming_distance))) 
+          "hamming" hamming_distance
+          "manhattan" manhattan_distance))) 
     "\n")))
