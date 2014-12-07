@@ -10,6 +10,10 @@ Clusterization on clojure
 * `<radius>` - radius.
 * `<distance_func_name>` - 'euclidean', 'hamming', 'manhattan'.
 
+## For start of tests
+
+`lein test`
+
 !!!!!
 
 
