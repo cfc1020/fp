@@ -10,6 +10,9 @@
   [a b]
   (math/sqrt (reduce + (map #(math/expt (- %1 %2) 2) a b))))
 
+(defn hamming_distance [a b]
+  (reduce + (map #(if (= %1 %2) 0 1) a b)))
+
 (defn parse_file
   [in_file]
   (let [data (csv/parse-csv (slurp in_file))]
@@ -17,7 +20,9 @@
       (fn [attributes_list]
         (let [list_without_attributes
           (if (= (re-find #"\D+" (last attributes_list)) nil)
+            ; then
             attributes_list
+            ; else, if the last attribute is name of class, then remove him
             (butlast attributes_list))]
           (map #(Float/parseFloat %) list_without_attributes)))
       data)))
@@ -102,8 +107,11 @@
               founded_cores)))))))
 
 (defn -main
-  [in_file]
+  [in_file name_of_distance_function]
   (print 
     (str (string/join " , "
-      (estimate_of_cores (parse_file in_file) euclidean_distance)) 
+      (estimate_of_cores (parse_file in_file)
+        (case name_of_distance_function
+          "euclidean" euclidean_distance
+          "hamming" hamming_distance))) 
     "\n")))
