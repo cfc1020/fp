@@ -65,9 +65,8 @@
     points_list))
 
 (defn estimate_of_cores
-  [points_list distance_function]
-  (let [ra 1.0
-        rb (* ra 1.5)
+  [points_list ra distance_function]
+  (let [rb (* ra 1.5)
         eps_below 0.5
         eps_ebove 0.15
         alpha (/ 4 (math/expt ra 2))
@@ -111,10 +110,10 @@
               founded_cores)))))))
 
 (defn -main
-  [in_file name_of_distance_function]
+  [in_file name_of_distance_function ra]
   (print 
     (str (string/join " , "
-      (estimate_of_cores (parse_file in_file)
+      (estimate_of_cores (parse_file in_file) (Float/parseFloat ra)
         (case name_of_distance_function
           "euclidean" euclidean_distance
           "hamming" hamming_distance
